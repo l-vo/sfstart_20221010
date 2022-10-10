@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Sensio TV Movie' %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+
+    <ul>
+        <li><strong>Release date: </strong>{{ release_date|format_datetime('full', 'none') }}</li>
+        <li><strong>Genre(s): </strong>{{ genres|join(', ') }}</li>
+        <li><strong>Rating: </strong>{{ rating }}</li>
+    </ul>
+{% endblock %}
