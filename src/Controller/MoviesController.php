@@ -20,9 +20,10 @@ class MoviesController extends AbstractController
             throw $this->createNotFoundException(null, $e);
         }
 
-        [$title, $releaseDate, $genres, $rating] = $movie;
+        [$title, $releaseDate, $genres, $rating, $image] = $movie;
 
         return $this->render('movies/movie.html.twig', [
+            'image' => $image,
             'title' => $title,
             'release_date' => new \DateTimeImmutable($releaseDate),
             'genres' => $genres,

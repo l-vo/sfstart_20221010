@@ -3,11 +3,17 @@
 {% block title 'Sensio TV Movie' %}
 
 {% block body %}
-    <h1>{{ title }}</h1>
+<div class="d-flex justify-content-center">
+    <div>
+        <h1>{{ title }}</h1>
 
-    <ul>
-        <li><strong>Release date: </strong>{{ release_date|format_datetime('full', 'none') }}</li>
-        <li><strong>Genre(s): </strong>{{ genres|join(', ') }}</li>
-        <li><strong>Rating: </strong>{{ rating }}</li>
-    </ul>
+        <img class="movie-img" src="{{ asset('build/images/movies/' ~ image) }}"/>
+
+        <ul>
+            <li><strong>Release date: </strong>{{ release_date|format_datetime('full', 'none') }}</li>
+            <li><strong>Genre(s): </strong>{{ genres|join(', ') }}</li>
+            <li><strong>Rating: </strong>{{ rating }}</li>
+        </ul>
+    </div>
+</div>
 {% endblock %}

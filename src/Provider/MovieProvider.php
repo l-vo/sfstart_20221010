@@ -7,9 +7,9 @@ use App\Exception\MovieNotFoundException;
 final class MovieProvider
 {
     private const MOVIES = [
-        ['L\'origine du mal', '2022-10-05', ['Drama', 'Thriller'], 3.6],
-        ['Les Enfants des autres', '2022-09-21', ['Drama'], 3.7],
-        ['Bullet train', '2022-08-03', ['Thriller'], 3.9],
+        ['L\'origine du mal', '2022-10-05', ['Drama', 'Thriller'], 3.6, 'origine_mal.jpg'],
+        ['Les Enfants des autres', '2022-09-21', ['Drama'], 3.7, 'enfants_autres.jpg'],
+        ['Bullet train', '2022-08-03', ['Thriller'], 3.9, 'bullet_train.jpg'],
     ];
 
     public static function getMovie(int $id): array
