@@ -5,14 +5,14 @@
 {% block body %}
 <div class="d-flex justify-content-center">
     <div>
-        <h1>{{ title }}</h1>
+        <h1>{{ movie.title }}</h1>
 
-        <img class="movie-img" src="{{ asset('build/images/movies/' ~ image) }}"/>
+        <img class="movie-img" src="{{ asset('build/images/movies/' ~ movie.image) }}"/>
 
         <ul>
-            <li><strong>Release date: </strong>{{ release_date|format_datetime('full', 'none') }}</li>
-            <li><strong>Genre(s): </strong>{{ genres|join(', ') }}</li>
-            <li><strong>Rating: </strong>{{ rating }}</li>
+            <li><strong>Release date: </strong>{{ movie.releaseDate|format_datetime('full', 'none') }}</li>
+            <li><strong>Genre(s): </strong>{{ movie.genres|join(', ') }}</li>
+            <li><strong>Rating: </strong>{{ (movie.rating/10)|number_format(1) }}</li>
         </ul>
     </div>
 </div>

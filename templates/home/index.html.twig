@@ -4,4 +4,11 @@
 
 {% block body %}
     <h1 class="text-center main-title">SensioTV</h1>
+    <div class="d-flex justify-content-center">
+        <ul>
+            {% for movie in latests %}
+                <li><a href="{{ path('app_movies', {id: movie.id}) }}">{{ movie.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

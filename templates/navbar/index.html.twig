@@ -14,9 +14,9 @@
                         Movies
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for id, title in titles %}
+                        {% for movie in movies %}
                             <li class="nav-item">
-                                <a class="dropdown-item" href="{{ path('app_movies', {id: id}) }}">{{ title }}</a>
+                                <a class="dropdown-item" href="{{ path('app_movies', {id: movie.id}) }}">{{ movie.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>
