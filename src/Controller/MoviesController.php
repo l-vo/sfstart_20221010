@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
 use App\Exception\MovieNotFoundException;
 use App\Provider\MovieProvider;
 use App\Repository\MovieRepository;
@@ -13,13 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class MoviesController extends AbstractController
 {
     #[Route('/movie/{id<\d+>}', name: 'app_movies', methods: 'GET')]
-    public function movie(int $id, MovieRepository $movieRepository): Response
+    public function movie(Movie $movie): Response
     {
-        $movie = $movieRepository->find($id);
-        if (null === $movie) {
-            throw $this->createNotFoundException();
-        }
-
         return $this->render('movies/movie.html.twig', [
             'movie' => $movie,
         ]);
