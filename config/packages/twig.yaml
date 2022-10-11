@@ -2,6 +2,8 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes:
         - 'bootstrap_5_horizontal_layout.html.twig'
+    globals:
+        web_upload: '%app.web_upload%'
 
 when@test:
     twig:
