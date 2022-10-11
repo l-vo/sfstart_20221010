@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
+#[UniqueEntity('title')]
 class Movie
 {
     #[ORM\Id]
@@ -16,18 +19,23 @@ class Movie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 20, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 20)]
     private ?string $title = null;
 
     #[ORM\ManyToMany(targetEntity: Genre::class)]
     private Collection $genre;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Range(min: 0, max: 50, notInRangeMessage: 'This value should be between 0 and 5.')]
     private ?int $rating = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $releaseDate = null;
 
