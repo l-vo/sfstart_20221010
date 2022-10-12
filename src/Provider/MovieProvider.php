@@ -2,28 +2,29 @@
 
 namespace App\Provider;
 
-use App\Exception\MovieNotFoundException;
+use App\Dto\ImdbMovie;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class MovieProvider
 {
-    private const MOVIES = [
-        ['L\'origine du mal', '2022-10-05', ['Drama', 'Thriller'], 3.6, 'origine_mal.jpg'],
-        ['Les Enfants des autres', '2022-09-21', ['Drama'], 3.7, 'enfants_autres.jpg'],
-        ['Bullet train', '2022-08-03', ['Thriller'], 3.9, 'bullet_train.jpg'],
-    ];
+    private HttpClientInterface $omdbapiClient;
 
-    public static function getMovie(int $id): array
+    public function __construct(HttpClientInterface $omdbapiClient)
     {
-        $movie = self::MOVIES[$id] ?? null;
-        if (null === $movie) {
-            throw new MovieNotFoundException(sprintf('Movie %d not found', $id));
-        }
-
-        return $movie;
+        $this->omdbapiClient = $omdbapiClient;
     }
 
-    public static function getTitles(): array
+    public function getById(string $id): ImdbMovie
     {
-        return array_map(static fn(array $data): string => $data[0], self::MOVIES);
+        $response = $this->omdbapiClient->request('GET', '/', ['query' => ['i' => $id]]);
+        $decoded = dump(json_decode($response->getContent()));
+        $imdbMovie = new ImdbMovie();
+        $imdbMovie->title = $decoded->Title;
+        $imdbMovie->rating = $decoded->imdbRating;
+        $imdbMovie->genres = explode(', ', $decoded->Genre);
+        $imdbMovie->image = $decoded->Poster;
+        $imdbMovie->releaseDate = new \DateTimeImmutable($decoded->Released);
+
+        return dump($imdbMovie);
     }
 }

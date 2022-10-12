@@ -1,0 +1,8 @@
+framework:
+  http_client:
+    scoped_clients:
+      # only requests matching scope will use these options
+      omdbapi.client:
+        base_uri: 'http://www.omdbapi.com/'
+        query:
+          apikey: '%env(OMDB_API_KEY)%'

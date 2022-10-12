@@ -13,9 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MoviesController extends AbstractController
 {
-    #[Route('/movie/{id<\d+>}', name: 'app_movies', methods: 'GET')]
-    public function movie(Movie $movie): Response
+    #[Route('/movie/{id<[A-Za-z0-9]+>}', name: 'app_movies', methods: 'GET')]
+    public function movie(string $id, MovieProvider $movieProvider): Response
     {
+        $movie = $movieProvider->getById($id);
+
         return $this->render('movies/movie.html.twig', [
             'movie' => $movie,
         ]);
