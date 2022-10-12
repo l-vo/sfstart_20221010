@@ -13,7 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MoviesController extends AbstractController
 {
-    #[Route('/movie/{id<\d+>}', name: 'app_movies', methods: 'GET')]
+    /**
+     * @Route("/movie/{id<\d+>}", name="app_movies", methods={"GET"})
+     */
     public function movie(Movie $movie): Response
     {
         return $this->render('movies/movie.html.twig', [
