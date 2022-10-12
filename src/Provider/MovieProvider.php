@@ -17,7 +17,7 @@ final class MovieProvider
     public function getById(string $id): ImdbMovie
     {
         $response = $this->omdbapiClient->request('GET', '/', ['query' => ['i' => $id]]);
-        $decoded = dump(json_decode($response->getContent()));
+        $decoded = json_decode($response->getContent());
         $imdbMovie = new ImdbMovie();
         $imdbMovie->title = $decoded->Title;
         $imdbMovie->rating = $decoded->imdbRating;
@@ -25,6 +25,6 @@ final class MovieProvider
         $imdbMovie->image = $decoded->Poster;
         $imdbMovie->releaseDate = new \DateTimeImmutable($decoded->Released);
 
-        return dump($imdbMovie);
+        return $imdbMovie;
     }
 }
