@@ -14,6 +14,11 @@
         {% endblock %}
     </head>
     <body>
+        {% if app.user is not null %}
+        <div class="float-end">
+            <a href="{{ logout_path() }}">Logout</a>
+        </div>
+        {% endif %}
         {{ render(controller('App\\Controller\\NavbarController::index')) }}
         {% block body %}{% endblock %}
     </body>
