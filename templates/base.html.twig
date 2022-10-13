@@ -14,7 +14,7 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.user is not null %}
+        {% if is_granted('IS_AUTHENTICATED') %}
         <div class="float-end">
             <a href="{{ logout_path() }}">Logout</a>
         </div>

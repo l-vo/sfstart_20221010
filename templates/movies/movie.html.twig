@@ -15,6 +15,9 @@
             <li><strong>Rating: </strong>{{ (movie.rating / 10)|number_format(1) }}</li>
             <li><strong>PG: </strong>{{ movie.pg }}</li>
         </ul>
+        {% if is_granted('ROLE_ADMIN')  %}
+            <a href="{{ path('admin_update_movie', {id: movie.id}) }}">Update movie</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

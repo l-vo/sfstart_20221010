@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Movie;
+use App\Event\MovieUpdatedEvent;
 use App\Form\MovieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,12 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
 {
-    #[Route('/update-movie/{id<\d+>}', name: 'add_movie')]
-    public function index(Request $request, EntityManagerInterface $entityManager, Movie $movie, SluggerInterface $slugger, string $uploadDir): Response
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private EventDispatcherInterface $eventDispatcher,
+    )
+    {
+    }
+
+    #[Route('/update-movie/{id<\d+>}', name: 'update_movie')]
+    public function index(Request $request, Movie $movie, SluggerInterface $slugger, string $uploadDir): Response
     {
         $form = $this->createForm(MovieType::class, $movie);
 
@@ -30,7 +39,9 @@ class AdminController extends AbstractController
                 $image->move($uploadDir, $targetFilename);
             }
 
-            $entityManager->flush();
+            $this->entityManager->flush();
+
+            $this->eventDispatcher->dispatch(new MovieUpdatedEvent($movie));
 
             return $this->redirectToRoute('app_movies', ['id' => $movie->getId()]);
         }

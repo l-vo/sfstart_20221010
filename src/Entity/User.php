@@ -23,7 +23,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $birthdate;
+    private ?\DateTimeImmutable $birthdate;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $lastLogin;
 
     /**
      * @var string The hashed password
@@ -100,9 +103,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->birthdate;
     }
 
-    public function setBirthdate(\DateTimeImmutable $birthdate): void
+    public function setBirthdate(\DateTimeImmutable $birthdate): self
     {
         $this->birthdate = $birthdate;
+
+        return $this;
     }
 
     /**
@@ -128,5 +133,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getLastLogin(): ?\DateTimeImmutable
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeImmutable $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
     }
 }
