@@ -33,6 +33,7 @@ class MovieType extends AbstractType
                 'multiple' => true,
                 'class' => Genre::class,
             ])
+            ->add('pg')
         ;
 
         $builder->get('rating')->addViewTransformer(new RatingDataTransformer(), true);

@@ -19,9 +19,9 @@ class Movie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20, unique: true)]
+    #[ORM\Column(length: 50, unique: true)]
     #[Assert\NotBlank]
-    #[Assert\Length(max: 20)]
+    #[Assert\Length(max: 50)]
     private ?string $title = null;
 
     #[ORM\ManyToMany(targetEntity: Genre::class)]
@@ -29,7 +29,7 @@ class Movie
 
     #[ORM\Column]
     #[Assert\NotBlank]
-    #[Assert\Range(min: 0, max: 50, notInRangeMessage: 'This value should be between 0 and 5.')]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'This value should be between 0 and 10.')]
     private ?int $rating = null;
 
     #[ORM\Column(length: 255)]
@@ -38,6 +38,10 @@ class Movie
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $releaseDate = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank]
+    private ?string $pg;
 
     public function __construct()
     {
@@ -119,5 +123,15 @@ class Movie
         $this->releaseDate = $releaseDate;
 
         return $this;
+    }
+
+    public function getPg(): ?string
+    {
+        return $this->pg;
+    }
+
+    public function setPg(?string $pg): void
+    {
+        $this->pg = $pg;
     }
 }

@@ -9,4 +9,5 @@ final class ImdbMovie
     public float $rating;
     public string $image;
     public array $genres;
+    public string $pg;
 }

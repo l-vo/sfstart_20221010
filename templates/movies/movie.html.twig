@@ -13,6 +13,7 @@
             <li><strong>Release date: </strong>{{ movie.releaseDate|format_datetime('full', 'none') }}</li>
             <li><strong>Genre(s): </strong>{{ movie.genres|join(', ') }}</li>
             <li><strong>Rating: </strong>{{ (movie.rating / 10)|number_format(1) }}</li>
+            <li><strong>PG: </strong>{{ movie.pg }}</li>
         </ul>
     </div>
 </div>

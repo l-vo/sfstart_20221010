@@ -24,6 +24,7 @@ final class MovieProvider
         $imdbMovie->genres = explode(', ', $decoded->Genre);
         $imdbMovie->image = $decoded->Poster;
         $imdbMovie->releaseDate = new \DateTimeImmutable($decoded->Released);
+        $imdbMovie->pg = $decoded->Rated;
 
         return $imdbMovie;
     }

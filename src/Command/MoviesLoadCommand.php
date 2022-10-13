@@ -53,7 +53,7 @@ class MoviesLoadCommand extends Command
         $displayTable = $output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE;
         if ($displayTable) {
             $table = new Table($output->section());
-            $table->setHeaders(['Id', 'Title', 'Rating', 'Genres', 'ReleaseDate']);
+            $table->setHeaders(['Id', 'Title', 'Rating', 'Genres', 'ReleaseDate', 'PG']);
             $table->render();
         }
 
@@ -71,6 +71,7 @@ class MoviesLoadCommand extends Command
             $movie->setImage($imdbMovie->image);
             $movie->setRating($imdbMovie->rating * 10);
             $movie->setReleaseDate($imdbMovie->releaseDate);
+            $movie->setPg($imdbMovie->pg);
 
             foreach ($imdbMovie->genres as $genreTitle) {
                 $genre = $this->genreRepository->findOneByTitle($genreTitle);
@@ -91,6 +92,7 @@ class MoviesLoadCommand extends Command
                     $this->formatRating($movie->getRating(), $output),
                     implode(', ', $movie->getGenres()->toArray()),
                     $movie->getReleaseDate()->format(\DateTimeInterface::RFC822),
+                    $movie->getPg()
                 ]);
             }
         }
