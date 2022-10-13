@@ -16,6 +16,7 @@ security:
             guard:
                 authenticator: App\Security\FormLoginGuard
             logout: ~
+            remember_me: ~
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
